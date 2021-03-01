@@ -1,38 +1,38 @@
 class NegociacaoController {
 
-    constructor() {
+  constructor() {
+    /* 
+      Precisamos usar o .bind pq querySelector só está presente no contexto
+      de 'document'. Dessa forma, precisamos atribuir o contexto do .this 
+      da variável '$' (que é uma função - funções têm seu próprio .this)
+      para que seja o 'document' através da função bind
+    */
+    let $ = document.querySelector.bind(document)
 
-        let $ = document.querySelector.bind(document);
-        this._inputData = $('#data');
-        this._inputQuantidade = $('#quantidade');
-        this._inputValor = $('#valor');
-        this._negociacoes = new Negociacoes()
-    }
+    this._inputData = $('#data')
+    this._inputQuantidade = $('#quantidade')
+    this._inputValor = $('#valor')
+  }
 
-    adiciona(event) {
+  adiciona(event) {
+    event.preventDefault()
 
-        event.preventDefault();
+    /* outro jeito de transformar a string para data
+       let data = new Date(this._inputData.value.replace(/-/g, ',')) 
+    */
 
-        const negociacao = this._criarNegociacao()
-        
-        this._negociacoes.adiciona(negociacao)
-        this._limpaFormulario()
-    }
+    /* outro jeito de transformar a string para data
+      let data = new Date(this._inputData.value.split('-'))   
+    */
 
-    _limpaFormulario() {
+    let negociacao = new Negociacao(
+      DateConverter.paraData(this._inputData.value),
+      this._inputQuantidade.value,
+      this._inputValor.value
+    )
 
-        this._inputData.value = ''
-        this._inputQuantidade.value = 1
-        this._inputValor.value = 0.0
-        this._inputData.focus()
-    }
+    let diaMesAno = DateConverter.paraTexto(negociacao.data)
 
-    _criarNegociacao() {
-        
-        return new Negociacao(
-            DateConverter.paraData(this._inputData.value),
-            parseInt(this._inputQuantidade.value),
-            parseFloat(this._inputValor.value)
-        );
-    }
+    console.log(diaMesAno)
+  }  
 }
