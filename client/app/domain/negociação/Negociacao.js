@@ -7,12 +7,8 @@ class Negociacao {
         this._valor = valor
     */
 
-    
-    Object.assign( // Solução melhor para deixar menos verboso. Significado: pág. 44
-      this,
-      _quantidade,
-      _valor,
-    )
+   // Solução melhor para deixar menos verboso. Significado: pág. 44
+   Object.assign(this, { _quantidade, _valor })
 
     // Propriedades que precisam ser alteradas antes da atribuição
     this._data = new Date(_data.getTime())

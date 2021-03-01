@@ -7,11 +7,11 @@ class NegociacaoController {
       da variável '$' (que é uma função - funções têm seu próprio .this)
       para que seja o 'document' através da função bind
     */
-    let $ = document.querySelector.bind(document)
-
-    this._inputData = $('#data')
-    this._inputQuantidade = $('#quantidade')
-    this._inputValor = $('#valor')
+    let $ = document.querySelector.bind(document);
+    this._inputData = $('#data');
+    this._inputQuantidade = $('#quantidade');
+    this._inputValor = $('#valor');
+    this._negociacoes = new Negociacoes()
   }
 
   adiciona(event) {
@@ -25,14 +25,26 @@ class NegociacaoController {
       let data = new Date(this._inputData.value.split('-'))   
     */
 
-    let negociacao = new Negociacao(
-      DateConverter.paraData(this._inputData.value),
-      this._inputQuantidade.value,
-      this._inputValor.value
-    )
-
-    let diaMesAno = DateConverter.paraTexto(negociacao.data)
-
-    console.log(diaMesAno)
+    const negociacao = this._criarNegociacao()
+        
+    this._negociacoes.adiciona(negociacao)
+    this._limpaFormulario()
   }  
+
+  _limpaFormulario() {
+
+    this._inputData.value = ''
+    this._inputQuantidade.value = 1
+    this._inputValor.value = 0.0
+    this._inputData.focus()
+}
+
+  _criarNegociacao() {
+    
+    return new Negociacao(
+      DateConverter.paraData(this._inputData.value),
+      parseInt(this._inputQuantidade.value),
+      parseFloat(this._inputValor.value)
+    );
+}
 }
