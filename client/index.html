@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
     <title>Negociações</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
@@ -60,5 +61,15 @@
     </table>
     
     <script src="app/index.js"></script>
+    <script src="app/domain/negociação/Negociacao.js"></script>
+    <script>
+        let hoje = new Date()
+        // let n1 = new Negociacao(new Date(), 5, 700) // instancia uma negociação (semelhante ao Create do delphi)     
+        let n1 = new Negociacao(hoje, 5, 700) // instancia uma negociação (semelhante ao Create do delphi)     
+        console.log(n1.data)
+
+        hoje.setDate(11)
+        console.log(n1.data)
+    </script>
 </body>
 </html>
